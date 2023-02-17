@@ -19,21 +19,21 @@ v1.0 - First release
 #endif
 
 /// The load resistance on the board
-#define RLOAD 1.0 //1.0
+#define RLOAD_9 1.0 //1.0
 /// Calibration resistance at atmospheric CO level
-#define RZERO 5.29 //1.52 || 5.29
+#define RZERO_9 5.29 //1.52 || 5.29
 /// Parameters for calculating ppm of CO from sensor resistance
-#define PARA 116.6020682
-#define PARB 2.769034857
+#define PARA_9 116.6020682
+#define PARB_9 2.769034857
 
 /// Parameters to model temperature and humidity dependence
-#define CORA 0.00035
-#define CORB 0.02718
-#define CORC 1.39538
-#define CORD 0.0018
+#define CORA_9 0.00035
+#define CORB_9 0.02718
+#define CORC_9 1.39538
+#define CORD_9 0.0018
 
 /// Atmospheric CO level for calibration purposes
-#define ATMOCO2 0.06
+#define ATMOCO_9 0.06
 
 class MQ9 {
  private:

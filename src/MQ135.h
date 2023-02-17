@@ -33,7 +33,7 @@ v1.0 - First release
 #define CORD 0.0018
 
 /// Atmospheric NOx level for calibration purposes
-#define ATMOCO2 0.053
+#define ATMONOX 0.053
 
 class MQ135 {
  private:

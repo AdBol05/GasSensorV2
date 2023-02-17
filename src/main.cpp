@@ -9,7 +9,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define DHTPIN 2
+#define DHTPIN 10
 #define DHTTYPE DHT22
 
 #define OLED_RESET 4

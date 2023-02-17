@@ -34,7 +34,7 @@ MQ9::MQ9(uint8_t pin) {
 */
 /**************************************************************************/
 float MQ9::getCorrectionFactor(float t, float h) {
-  return CORA * t * t - CORB * t + CORC - (h-33.)*CORD;
+  return CORA_9 * t * t - CORB_9 * t + CORC_9 - (h-33.)*CORD_9;
 }
 
 /**************************************************************************/
@@ -45,7 +45,7 @@ float MQ9::getCorrectionFactor(float t, float h) {
 /**************************************************************************/
 float MQ9::getResistance() {
   int val = analogRead(_pin);
-  return ((1023./(float)val) * 5. - 1.)*RLOAD;
+  return ((1023./(float)val) * 5. - 1.)*RLOAD_9;
 }
 
 /**************************************************************************/
@@ -68,7 +68,7 @@ float MQ9::getCorrectedResistance(float t, float h) {
 */
 /**************************************************************************/
 float MQ9::getPPM() {
-  return PARA * pow((getResistance()/RZERO), -PARB);
+  return PARA_9 * pow((getResistance()/RZERO_9), -PARB_9);
 }
 
 /**************************************************************************/
@@ -81,7 +81,7 @@ float MQ9::getPPM() {
 */
 /**************************************************************************/
 float MQ9::getCorrectedPPM(float t, float h) {
-  return PARA * pow((getCorrectedResistance(t, h)/RZERO), -PARB);
+  return PARA_9 * pow((getCorrectedResistance(t, h)/RZERO_9), -PARB_9);
 }
 
 /**************************************************************************/
@@ -91,7 +91,7 @@ float MQ9::getCorrectedPPM(float t, float h) {
 */
 /**************************************************************************/
 float MQ9::getRZero() {
-  return getResistance() * pow((ATMOCO2/PARA), (1./PARB));
+  return getResistance() * pow((ATMOCO_9/PARA_9), (1./PARB_9));
 }
 
 /**************************************************************************/
@@ -104,5 +104,5 @@ float MQ9::getRZero() {
 */
 /**************************************************************************/
 float MQ9::getCorrectedRZero(float t, float h) {
-  return getCorrectedResistance(t, h) * pow((ATMOCO2/PARA), (1./PARB));
+  return getCorrectedResistance(t, h) * pow((ATMOCO_9/PARA_9), (1./PARB_9));
 }
