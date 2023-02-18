@@ -4,7 +4,9 @@
 #include "MQ9.h"
 #include "dht.h"
 
-#include <SD.h>
+#include <SdFat.h>
+SdFat SD;
+
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -22,7 +24,7 @@ I2C OLED:
   SCL -> A5
 
 SDcard:
-  CS -> 4
+  CS -> 10 (4)
   SCK -> 13
   MOSI -> 11
   MISO -> 12
@@ -31,11 +33,9 @@ SDcard:
 #define OLED_RESET 5 //idk what this does, it was on 4 by default
 Adafruit_SSD1306 display(OLED_RESET);
 
-const int chipSelect = 4;
+dht DHT;
 
 File myFile;
-
-dht DHT;
 
 void setup()
 {
@@ -65,7 +65,7 @@ void setup()
 
   //SD card init
   Serial.print("Initializing SD card...");
-  if (!SD.begin(4))
+  if (!SD.begin(10))
   {
     Serial.println("initialization failed!");
     while (1);
@@ -73,33 +73,6 @@ void setup()
 
   Serial.println("initialization done.");
   myFile = SD.open("test.txt", FILE_WRITE);
-
-  //write header to file
-  /*if (myFile)
-  {
-    Serial.print("Writing to test.txt...");
-    myFile.println("CO,NOx,Temperature,Humidity");
-    myFile.close();
-    Serial.println("done.");
-  }
-  else
-  {
-    Serial.println("error opening test.txt");
-  }
-
-  if (!sd.begin(chipSelect, SPI_HALF_SPEED)){
-    sd.initErrorHalt();
-    Serial.println("Error initializing SD card");
-  }
-
-  if (!myFile.open("output.txt", O_RDWR | O_CREAT | O_AT_END)) {
-    sd.errorHalt("Opening output.txt for write failed");
-  }
-
-  Serial.println("Writing header to output.txt...");
-  myFile.println("NOx,CO,Temperature,Humidity");
-  myFile.close();
-  Serial.println("done.");*/
 }
 
 void loop()
