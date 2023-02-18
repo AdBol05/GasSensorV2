@@ -11,6 +11,8 @@
 #include <Adafruit_SSD1306.h>
 // #include <SdFat.h>
 
+#define MQ135_PIN A0
+#define MQ9_PIN A1
 #define DHTPIN A2
 #define DHTTYPE DHT22
 
@@ -53,7 +55,7 @@ void setup()
   display.display();
 
   //SD card init
-  Serial.print("Initializing SD card...");
+  /*Serial.print("Initializing SD card...");
   if (!SD.begin(4))
   {
     Serial.println("initialization failed!");
@@ -94,11 +96,11 @@ void setup()
 void loop()
 {
   // Get values
-  MQ135 gasSensor135 = MQ135(A0);
+  MQ135 gasSensor135 = MQ135(MQ135_PIN);
   float ppm_NOX = gasSensor135.getPPM();
   float rz135 = gasSensor135.getRZero();
 
-  MQ9 gasSensor9 = MQ9(A1);
+  MQ9 gasSensor9 = MQ9(MQ9_PIN);
   float ppm_CO = gasSensor9.getPPM();
   float rz9 = gasSensor9.getRZero();
 
