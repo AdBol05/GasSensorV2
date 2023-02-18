@@ -16,6 +16,18 @@
 #define DHTPIN A2
 #define DHTTYPE DHT22
 
+/*
+I2C OLED:
+  SDA -> A4
+  SCL -> A5
+
+SDcard:
+  CS -> 4
+  SCK -> 13
+  MOSI -> 11
+  MISO -> 12
+*/
+
 #define OLED_RESET 5 //idk what this does, it was on 4 by default
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -85,7 +97,7 @@ void setup()
   }
 
   Serial.println("Writing header to output.txt...");
-  myFile.println("CO,NOx,Temperature,Humidity");
+  myFile.println("NOx,CO,Temperature,Humidity");
   myFile.close();
   Serial.println("done.");*/
 }
@@ -95,11 +107,9 @@ void loop()
   // Get values
   MQ135 gasSensor135 = MQ135(MQ135_PIN);
   float ppm_NOX = gasSensor135.getPPM();
-  float rz135 = gasSensor135.getRZero();
 
   MQ9 gasSensor9 = MQ9(MQ9_PIN);
   float ppm_CO = gasSensor9.getPPM();
-  float rz9 = gasSensor9.getRZero();
 
   String nox = "NOx: ";
   nox += ppm_NOX;
@@ -144,12 +154,17 @@ void loop()
   Serial.println(hum);
   Serial.println(temp);
   Serial.println("-------------------");
-  String rzero9 = "RZero MQ9: ";
-  rzero9 += rz9;
-  String rzero135 = "RZero MQ135: ";
-  rzero135 += rz135;
-  Serial.println(rzero9);
-  Serial.println(rzero135);
+
+  String csv_val = "";
+  csv_val += ppm_NOX;
+  csv_val += ",";
+  csv_val += ppm_CO;
+  csv_val += ",";
+  csv_val += temp;
+  csv_val += ",";
+  csv_val += hum;
+
+  Serial.println(csv_val);
   Serial.println("===================");
 
   delay(5000);
