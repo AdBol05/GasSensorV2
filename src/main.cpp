@@ -78,7 +78,7 @@ void setup()
     Serial.println("error opening test.txt");
   }
 
-  /*if (!sd.begin(chipSelect, SPI_HALF_SPEED)){
+  if (!sd.begin(chipSelect, SPI_HALF_SPEED)){
     sd.initErrorHalt();
     Serial.println("Error initializing SD card");
   }
