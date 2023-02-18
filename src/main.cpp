@@ -14,7 +14,7 @@
 #define DHTPIN A2
 #define DHTTYPE DHT22
 
-#define OLED_RESET 4
+#define OLED_RESET 5 //idk what this does, it was on 4 by default
 Adafruit_SSD1306 display(OLED_RESET);
 
 const int chipSelect = 4;
