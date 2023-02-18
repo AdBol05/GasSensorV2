@@ -23,9 +23,6 @@ const int chipSelect = 4;
 
 File myFile;
 
-/*SdFat sd;
-SdFile myFile;*/
-
 dht DHT;
 
 void setup()
@@ -55,7 +52,7 @@ void setup()
   display.display();
 
   //SD card init
-  /*Serial.print("Initializing SD card...");
+  Serial.print("Initializing SD card...");
   if (!SD.begin(4))
   {
     Serial.println("initialization failed!");
@@ -66,7 +63,7 @@ void setup()
   myFile = SD.open("test.txt", FILE_WRITE);
 
   //write header ti file
-  if (myFile)
+  /*if (myFile)
   {
     Serial.print("Writing to test.txt...");
     myFile.println("CO,NOx,Temperature,Humidity");
