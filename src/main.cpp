@@ -4,51 +4,98 @@
 #include "MQ9.h"
 #include "dht.h"
 
+#include <SD.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+// #include <SdFat.h>
 
-#define DHTPIN 10
+#define DHTPIN A2
 #define DHTTYPE DHT22
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
 
+const int chipSelect = 4;
+
+File myFile;
+
+/*SdFat sd;
+SdFile myFile;*/
+
 dht DHT;
 
-void setup (){
-  //init
-  Serial.begin (9600);
+void setup()
+{
+  // init
+  Serial.begin(9600);
 
   display.begin(16, 2);
   display.clearDisplay();
   display.display();
-    
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
+
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3D (for the 128x64)
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.clearDisplay();
   display.display();
 
-  //Splash screen
+  // Splash screen
   delay(500);
-  display.setCursor(5,10);
+  display.setCursor(5, 10);
   display.setTextSize(2);
   display.write("Laborky.cz");
   display.display();
   delay(2000);
   display.clearDisplay();
   display.display();
+
+  Serial.print("Initializing SD card...");
+  if (!SD.begin(4))
+  {
+    Serial.println("initialization failed!");
+    while (1);
+  }
+
+  Serial.println("initialization done.");
+  myFile = SD.open("test.txt", FILE_WRITE);
+
+  if (myFile)
+  {
+    Serial.print("Writing to test.txt...");
+    myFile.println("CO,NOx,Temperature,Humidity");
+    myFile.close();
+    Serial.println("done.");
+  }
+  else
+  {
+    Serial.println("error opening test.txt");
+  }
+
+  /*if (!sd.begin(chipSelect, SPI_HALF_SPEED)){
+    sd.initErrorHalt();
+    Serial.println("Error initializing SD card");
+  }
+
+  if (!myFile.open("output.txt", O_RDWR | O_CREAT | O_AT_END)) {
+    sd.errorHalt("Opening output.txt for write failed");
+  }
+
+  Serial.println("Writing header to output.txt...");
+  myFile.println("CO,NOx,Temperature,Humidity");
+  myFile.close();
+  Serial.println("done.");*/
 }
 
-void loop() {
-  //Get values
+void loop()
+{
+  // Get values
   MQ135 gasSensor135 = MQ135(A0);
   float ppm_NOX = gasSensor135.getPPM();
   float rz135 = gasSensor135.getRZero();
-  
+
   MQ9 gasSensor9 = MQ9(A1);
   float ppm_CO = gasSensor9.getPPM();
   float rz9 = gasSensor9.getRZero();
@@ -63,7 +110,7 @@ void loop() {
 
   DHT.read22(DHTPIN);
 
-  //Format values
+  // Format values
   String hum = "Vlhkost: ";
   hum += DHT.humidity;
   hum += "%";
@@ -72,25 +119,25 @@ void loop() {
   temp += DHT.temperature;
   temp += "C";
 
-  //Display values
+  // Display values
   display.clearDisplay();
   display.setTextSize(1);
 
-  display.setCursor(2,0);
+  display.setCursor(2, 0);
   display.print(nox);
 
-  display.setCursor(2,8);
+  display.setCursor(2, 8);
   display.print(co);
 
-  display.setCursor(2,16);
+  display.setCursor(2, 16);
   display.print(temp);
 
-  display.setCursor(2,24);
+  display.setCursor(2, 24);
   display.print(hum);
 
   display.display();
 
-  //Print values to console
+  // Print values to console
   Serial.println(nox);
   Serial.println(co);
   Serial.println(hum);
@@ -103,6 +150,6 @@ void loop() {
   Serial.println(rzero9);
   Serial.println(rzero135);
   Serial.println("===================");
-  
+
   delay(5000);
 }
