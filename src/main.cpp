@@ -62,7 +62,7 @@ void setup()
   Serial.println("initialization done.");
   myFile = SD.open("test.txt", FILE_WRITE);
 
-  //write header ti file
+  //write header to file
   /*if (myFile)
   {
     Serial.print("Writing to test.txt...");
