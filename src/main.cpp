@@ -30,7 +30,7 @@ SDcard:
   MISO -> 12
 */
 
-#define OLED_RESET 5 //idk what this does, it was on 4 by default
+#define OLED_RESET 4 //idk what this does, it was on 4 by default
 Adafruit_SSD1306 display(OLED_RESET);
 
 dht DHT;
