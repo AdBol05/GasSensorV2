@@ -70,8 +70,8 @@ void setup()
     Serial.println("initialization failed!");
     while (1);
   }
-
   Serial.println("initialization done.");
+
   myFile = SD.open("test.txt", FILE_WRITE);
 }
 
