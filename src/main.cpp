@@ -142,6 +142,8 @@ void loop()
   csv_val += hum;
 
   Serial.println(csv_val);
+  dataFile.println(csv_val);
+  Serial.println("Written data to SD card");
   Serial.println("===================");
 
   delay(5000);
