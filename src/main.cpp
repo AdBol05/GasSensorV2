@@ -70,7 +70,7 @@ void setup()
     Serial.println("initialization failed! Halting");
     display.setCursor(5, 5);
     display.setTextSize(1);
-    display.write("Failed to initialize SD card!");
+    display.write("Nepodařilo se načíst SD kartu!");
     display.display();
     while (1);
   }
