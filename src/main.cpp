@@ -35,7 +35,7 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 dht DHT;
 
-File myFile;
+File dataFile;
 
 void setup()
 {
@@ -67,12 +67,16 @@ void setup()
   Serial.print("Initializing SD card...");
   if (!SD.begin(10))
   {
-    Serial.println("initialization failed!");
+    Serial.println("initialization failed! Halting");
+    display.setCursor(5, 5);
+    display.setTextSize(1);
+    display.write("Failed to initialize SD card!");
+    display.display();
     while (1);
   }
   Serial.println("initialization done.");
 
-  myFile = SD.open("test.txt", FILE_WRITE);
+  dataFile = SD.open("test.txt", FILE_WRITE);
 }
 
 void loop()
