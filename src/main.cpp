@@ -17,6 +17,8 @@ SdFat SD;
 #define MQ9_PIN A1
 #define DHTPIN A2
 #define DHTTYPE DHT22
+#define OLED_RESET 4 //idk what this does, it was on 4 by default
+#define SD_CS_PIN 10
 
 /*
 I2C OLED:
@@ -29,8 +31,6 @@ SDcard:
   MOSI -> 11
   MISO -> 12
 */
-
-#define OLED_RESET 4 //idk what this does, it was on 4 by default
 Adafruit_SSD1306 display(OLED_RESET);
 
 dht DHT;
@@ -65,7 +65,7 @@ void setup()
 
   //SD card init
   Serial.print("Initializing SD card...");
-  if (!SD.begin(10))
+  if (!SD.begin(SD_CS_PIN))
   {
     Serial.println("initialization failed! Halting");
     display.setCursor(5, 5);
