@@ -76,7 +76,7 @@ void setup()
   }
   Serial.println("initialization done.");
 
-  dataFile = SD.open("test.txt", FILE_WRITE);
+  dataFile = SD.open("data.csv", FILE_WRITE);
 }
 
 void loop()
