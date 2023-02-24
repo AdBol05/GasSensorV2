@@ -145,7 +145,7 @@ void loop()
   csv_val += ",";
   csv_val += hum;
 
-  //write csv row tro SD card and print it to serial console
+  //write csv row to SD card and print it to serial console
   Serial.println(csv_val);
   dataFile.println(csv_val);
   Serial.println("Written data to SD card");
