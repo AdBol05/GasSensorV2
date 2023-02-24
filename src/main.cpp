@@ -135,6 +135,7 @@ void loop()
   Serial.println(temp);
   Serial.println("-------------------");
 
+  //format data to csv row
   String csv_val = "";
   csv_val += ppm_NOX;
   csv_val += ",";
@@ -144,6 +145,7 @@ void loop()
   csv_val += ",";
   csv_val += hum;
 
+  //write csv row tro SD card and print it to serial console
   Serial.println(csv_val);
   dataFile.println(csv_val);
   Serial.println("Written data to SD card");
