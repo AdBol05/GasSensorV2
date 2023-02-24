@@ -91,6 +91,9 @@ void loop()
   MQ9 gasSensor9 = MQ9(MQ9_PIN);
   float ppm_CO = gasSensor9.getPPM();
 
+  DHT.read22(DHTPIN);
+  
+  // Format values
   String nox = "NOx: ";
   nox += ppm_NOX;
   nox += " ppm";
@@ -99,9 +102,6 @@ void loop()
   co += ppm_CO;
   co += " ppm";
 
-  DHT.read22(DHTPIN);
-
-  // Format values
   String hum = "Vlhkost: ";
   hum += DHT.humidity;
   hum += "%";
