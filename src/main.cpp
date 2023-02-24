@@ -25,6 +25,9 @@ I2C OLED:
   SDA -> A4
   SCL -> A5
 
+SPI E-INK:
+  TBD
+
 SDcard:
   CS -> 10 (4)
   SCK -> 13
