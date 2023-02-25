@@ -6,19 +6,21 @@
 
 #include <SdFat.h>
 SdFat SD;
+//File myFile;  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
 
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-// #include <SdFat.h>
 
 #define MQ135_PIN A0
 #define MQ9_PIN A1
 #define DHTPIN A2
 #define DHTTYPE DHT22
-#define OLED_RESET 4 //idk what this does, it was on 4 by default
-#define SD_CS_PIN 10
+
+#define OLED_RESET 5 //idk what this does, it was on 4 by default
+Adafruit_SSD1306 display(OLED_RESET);
+
 
 /*
 I2C OLED:
@@ -34,11 +36,8 @@ SDcard:
   MOSI -> 11
   MISO -> 12
 */
-Adafruit_SSD1306 display(OLED_RESET);
 
 dht DHT;
-
-File dataFile;
 
 void setup()
 {
@@ -65,21 +64,6 @@ void setup()
   delay(2000);
   display.clearDisplay();
   display.display();
-
-  //SD card init
-  Serial.print("Initializing SD card...");
-  if (!SD.begin(SD_CS_PIN))
-  {
-    Serial.println("initialization failed! Halting");
-    display.setCursor(5, 5);
-    display.setTextSize(1);
-    display.write("Nepodařilo se načíst SD kartu!");
-    display.display();
-    while (1);
-  }
-  Serial.println("initialization done.");
-
-  dataFile = SD.open("data.csv", FILE_WRITE);
 }
 
 void loop()
@@ -91,9 +75,6 @@ void loop()
   MQ9 gasSensor9 = MQ9(MQ9_PIN);
   float ppm_CO = gasSensor9.getPPM();
 
-  DHT.read22(DHTPIN);
-  
-  // Format values
   String nox = "NOx: ";
   nox += ppm_NOX;
   nox += " ppm";
@@ -102,6 +83,9 @@ void loop()
   co += ppm_CO;
   co += " ppm";
 
+  DHT.read22(DHTPIN);
+
+  // Format values
   String hum = "Vlhkost: ";
   hum += DHT.humidity;
   hum += "%";
@@ -134,21 +118,6 @@ void loop()
   Serial.println(hum);
   Serial.println(temp);
   Serial.println("-------------------");
-
-  //format data to csv row
-  String csv_val = "";
-  csv_val += ppm_NOX;
-  csv_val += ",";
-  csv_val += ppm_CO;
-  csv_val += ",";
-  csv_val += temp;
-  csv_val += ",";
-  csv_val += hum;
-
-  //write csv row to SD card and print it to serial console
-  Serial.println(csv_val);
-  dataFile.println(csv_val);
-  Serial.println("Written data to SD card");
   Serial.println("===================");
 
   delay(5000);
