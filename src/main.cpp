@@ -6,7 +6,6 @@
 
 #include <SdFat.h>
 SdFat SD;
-//File CSVfile;  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
 
 #include <SPI.h>
 #include <Wire.h>
@@ -18,7 +17,7 @@ SdFat SD;
 #define DHTPIN A2
 #define DHTTYPE DHT22
 
-#define OLED_RESET 5 //idk what this does, it was on 4 by default
+#define OLED_RESET 5 // idk what this does, it was on 4 by default
 Adafruit_SSD1306 display(OLED_RESET);
 
 /*
@@ -37,6 +36,8 @@ SDcard:
 */
 
 dht DHT;
+
+bool SDstatus;
 
 void setup()
 {
@@ -63,63 +64,85 @@ void setup()
   delay(2000);
   display.clearDisplay();
   display.display();
+
+  Serial.print("SD card initialization... ");
+  SDstatus = SD.begin(10);
+  Serial.print(SDstatus);
+
+  if (SDstatus)
+  {
+    Serial.println(" Done");
+    // File CSVfile;  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
+  }
+
+  else
+  {
+    Serial.println(" Initialization failed!");
+    display.setCursor(1, 10);
+    display.setTextSize(1);
+    display.write("Nepodarilo se nacist SD kartu");
+    display.display();
+  }
 }
 
 void loop()
 {
-  // Get values
-  DHT.read22(DHTPIN);
-  float temperature = DHT.temperature;
-  float humidity = DHT.humidity;
+  if (SDstatus)
+  {
+    // Get values
+    DHT.read22(DHTPIN);
+    float temperature = DHT.temperature;
+    float humidity = DHT.humidity;
 
-  MQ135 gasSensor135 = MQ135(MQ135_PIN);
-  float ppm_NOX = gasSensor135.getPPM();
+    MQ135 gasSensor135 = MQ135(MQ135_PIN);
+    float ppm_NOX = gasSensor135.getPPM();
 
-  MQ9 gasSensor9 = MQ9(MQ9_PIN);
-  float ppm_CO = gasSensor9.getPPM();
+    MQ9 gasSensor9 = MQ9(MQ9_PIN);
+    float ppm_CO = gasSensor9.getPPM();
 
-  String nox = "NOx: ";
-  nox += ppm_NOX;
-  nox += " ppm";
+    String nox = "NOx: ";
+    nox += ppm_NOX;
+    nox += " ppm";
 
-  String co = "CO: ";
-  co += ppm_CO;
-  co += " ppm";
+    String co = "CO: ";
+    co += ppm_CO;
+    co += " ppm";
 
-  // Format values
-  String hum = "Vlhkost: ";
-  hum += humidity;
-  hum += "%";
+    // Format values
+    String hum = "Vlhkost: ";
+    hum += humidity;
+    hum += "%";
 
-  String temp = "Teplota: ";
-  temp += temperature;
-  temp += "C";
+    String temp = "Teplota: ";
+    temp += temperature;
+    temp += "C";
 
-  // Display values
-  display.clearDisplay();
-  display.setTextSize(1);
+    // Display values
+    display.clearDisplay();
+    display.setTextSize(1);
 
-  display.setCursor(2, 0);
-  display.print(nox);
+    display.setCursor(2, 0);
+    display.print(nox);
 
-  display.setCursor(2, 8);
-  display.print(co);
+    display.setCursor(2, 8);
+    display.print(co);
 
-  display.setCursor(2, 16);
-  display.print(temp);
+    display.setCursor(2, 16);
+    display.print(temp);
 
-  display.setCursor(2, 24);
-  display.print(hum);
+    display.setCursor(2, 24);
+    display.print(hum);
 
-  display.display();
+    display.display();
 
-  // Print values to console
-  Serial.println(nox);
-  Serial.println(co);
-  Serial.println(hum);
-  Serial.println(temp);
-  Serial.println("-------------------");
-  Serial.println("===================");
+    // Print values to console
+    Serial.println(nox);
+    Serial.println(co);
+    Serial.println(hum);
+    Serial.println(temp);
+    Serial.println("-------------------");
+    Serial.println("===================");
 
-  delay(5000);
+    delay(5000);
+  }
 }
