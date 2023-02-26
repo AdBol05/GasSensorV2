@@ -74,8 +74,7 @@ void setup()
   //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
   Serial.print("SD card initialization... ");
   SDstatus = SD.begin(10);
-  Serial.println(SDstatus);
-  //File myFile;
+  //Serial.println(SDstatus);
 
   /*if (SDstatus)
   {
@@ -99,6 +98,9 @@ void loop()
   if (SDstatus)
   {
     // Get values
+
+    Serial.println("Reading sensor data...");
+
     float ppm_NOX = PPM(MQ135_PIN, 1.18);
     float ppm_CO = PPM(MQ9_PIN, 5.29);
 
@@ -107,8 +109,10 @@ void loop()
     float temperature = DHT.temperature;
     float humidity = DHT.humidity;
 
+    Serial.println("Writing data to display...");
+
     // Display values
-    display.clearDisplay();
+    /*display.clearDisplay();
     display.setTextSize(1);
 
     display.setCursor(26, 0);
@@ -131,7 +135,7 @@ void loop()
     display.setCursor(55, 24);
     display.print(humidity);
 
-    display.display();
+    display.display();*/
 
     Serial.println("-------------------");
     //print raw analog values to console
@@ -140,13 +144,17 @@ void loop()
     Serial.println(temperature);
     Serial.println(humidity);
     Serial.println("===================");
-    /*CSVfile.print(ppm_NOX);
-    CSVfile.print(",");
-    CSVfile.print(ppm_CO);
-    CSVfile.print(",");
-    CSVfile.print(temperature);
-    CSVfile.print(",");
-    CSVfile.println(humidity);*/
+    //write data to SD card
+    File myFile = SD.open("test.txt", FILE_WRITE);
+    myFile.print(ppm_NOX);
+    myFile.print(",");
+    myFile.print(ppm_CO);
+    myFile.print(",");
+    myFile.print(temperature);
+    myFile.print(",");
+    myFile.println(humidity);
+    myFile.close();
+
     Serial.println("Data written to SD card");
     delay(10000);
   }
