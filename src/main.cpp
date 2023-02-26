@@ -6,7 +6,7 @@
 
 #include <SdFat.h>
 SdFat SD;
-//File myFile;  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
+//File CSVfile;  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
 
 #include <SPI.h>
 #include <Wire.h>
@@ -20,7 +20,6 @@ SdFat SD;
 
 #define OLED_RESET 5 //idk what this does, it was on 4 by default
 Adafruit_SSD1306 display(OLED_RESET);
-
 
 /*
 I2C OLED:
@@ -69,6 +68,10 @@ void setup()
 void loop()
 {
   // Get values
+  DHT.read22(DHTPIN);
+  float temperature = DHT.temperature;
+  float humidity = DHT.humidity;
+
   MQ135 gasSensor135 = MQ135(MQ135_PIN);
   float ppm_NOX = gasSensor135.getPPM();
 
@@ -83,15 +86,13 @@ void loop()
   co += ppm_CO;
   co += " ppm";
 
-  DHT.read22(DHTPIN);
-
   // Format values
   String hum = "Vlhkost: ";
-  hum += DHT.humidity;
+  hum += humidity;
   hum += "%";
 
   String temp = "Teplota: ";
-  temp += DHT.temperature;
+  temp += temperature;
   temp += "C";
 
   // Display values
