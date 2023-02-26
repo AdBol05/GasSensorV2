@@ -1,11 +1,10 @@
 #include <Arduino.h>
 
-#include "MQ135.h"
-#include "MQ9.h"
+//#include "MQ135.h"
+//#include "MQ9.h"
 #include "dht.h"
 
-#include <SdFat.h>
-SdFat SD;
+#include <SD.h>
 
 #include <SPI.h>
 #include <Wire.h>
@@ -17,7 +16,7 @@ SdFat SD;
 #define DHTPIN A2
 #define DHTTYPE DHT22
 
-#define OLED_RESET 5 // idk what this does, it was on 4 by default
+#define OLED_RESET 5
 Adafruit_SSD1306 display(OLED_RESET);
 
 /*
@@ -29,7 +28,7 @@ SPI E-INK:
   TBD
 
 SDcard:
-  CS -> 10 (4)
+  CS -> 10
   SCK -> 13
   MOSI -> 11
   MISO -> 12
@@ -38,6 +37,13 @@ SDcard:
 dht DHT;
 
 bool SDstatus;
+
+float PPM(uint8_t pin, float R0){
+  int val = analogRead(pin);
+  float resistance = ((1023./(float)val) * 5. - 1.)*1.0;
+  return 116.6020682 * pow((resistance/R0), -2.769034857);
+}
+
 
 void setup()
 {
@@ -65,24 +71,27 @@ void setup()
   display.clearDisplay();
   display.display();
 
+  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
   Serial.print("SD card initialization... ");
   SDstatus = SD.begin(10);
-  Serial.print(SDstatus);
+  Serial.println(SDstatus);
+  //File myFile;
 
-  if (SDstatus)
+  /*if (SDstatus)
   {
     Serial.println(" Done");
-    // File CSVfile;  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
+    CSVfile = SD.open("output.txt", FILE_WRITE);
   }
 
   else
   {
-    Serial.println(" Initialization failed!");
+    Serial.println(" failed!");
     display.setCursor(1, 10);
     display.setTextSize(1);
     display.write("Nepodarilo se nacist SD kartu");
     display.display();
-  }
+    while(1);
+  }*/
 }
 
 void loop()
@@ -90,59 +99,55 @@ void loop()
   if (SDstatus)
   {
     // Get values
+    float ppm_NOX = PPM(MQ135_PIN, 1.18);
+    float ppm_CO = PPM(MQ9_PIN, 5.29);
+
     DHT.read22(DHTPIN);
+
     float temperature = DHT.temperature;
     float humidity = DHT.humidity;
-
-    MQ135 gasSensor135 = MQ135(MQ135_PIN);
-    float ppm_NOX = gasSensor135.getPPM();
-
-    MQ9 gasSensor9 = MQ9(MQ9_PIN);
-    float ppm_CO = gasSensor9.getPPM();
-
-    String nox = "NOx: ";
-    nox += ppm_NOX;
-    nox += " ppm";
-
-    String co = "CO: ";
-    co += ppm_CO;
-    co += " ppm";
-
-    // Format values
-    String hum = "Vlhkost: ";
-    hum += humidity;
-    hum += "%";
-
-    String temp = "Teplota: ";
-    temp += temperature;
-    temp += "C";
 
     // Display values
     display.clearDisplay();
     display.setTextSize(1);
 
-    display.setCursor(2, 0);
-    display.print(nox);
+    display.setCursor(26, 0);
+    display.print("NOx:");
+    display.setCursor(55, 0);
+    display.print(ppm_NOX);
 
-    display.setCursor(2, 8);
-    display.print(co);
+    display.setCursor(32, 8);
+    display.print("CO:");
+    display.setCursor(55, 8);
+    display.print(ppm_CO);
 
     display.setCursor(2, 16);
-    display.print(temp);
+    display.print("Teplota:");
+    display.setCursor(55, 16);
+    display.print(temperature);
 
     display.setCursor(2, 24);
-    display.print(hum);
+    display.print("Vlhkost:");
+    display.setCursor(55, 24);
+    display.print(humidity);
 
     display.display();
 
-    // Print values to console
-    Serial.println(nox);
-    Serial.println(co);
-    Serial.println(hum);
-    Serial.println(temp);
     Serial.println("-------------------");
+    //print raw analog values to console
+    Serial.println(ppm_NOX);    
+    Serial.println(ppm_CO);
+    Serial.println(temperature);
+    Serial.println(humidity);
     Serial.println("===================");
-
-    delay(5000);
+    /*CSVfile.print(ppm_NOX);
+    CSVfile.print(",");
+    CSVfile.print(ppm_CO);
+    CSVfile.print(",");
+    CSVfile.print(temperature);
+    CSVfile.print(",");
+    CSVfile.println(humidity);*/
+    Serial.println("Data written to SD card");
+    delay(10000);
   }
 }
