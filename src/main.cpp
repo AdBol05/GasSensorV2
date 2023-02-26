@@ -83,7 +83,6 @@ void setup()
 void loop()
 {
   // Get values
-
   Serial.println("Reading sensor data...");
 
   float ppm_NOX = PPM(MQ135_PIN, 1.18);
@@ -127,8 +126,8 @@ void loop()
   Serial.println(temperature);
   Serial.println(humidity);
   Serial.println("===================");
-  // write data to SD card
 
+  // write data to SD card
   if (SDstatus)
   {
     File myFile = SD.open("data.txt", FILE_WRITE);
