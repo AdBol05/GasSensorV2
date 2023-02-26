@@ -57,7 +57,7 @@ void setup()
   // init
   Serial.begin(9600);
 
-  display.begin(16, 2);
+  /*display.begin(16, 2);
   display.clearDisplay();
   display.display();
 
@@ -76,7 +76,7 @@ void setup()
   display.display();
   delay(2000);
   display.clearDisplay();
-  display.display();
+  display.display();*/
 
   //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
   Serial.print("SD card initialization... ");
