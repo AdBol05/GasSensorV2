@@ -19,6 +19,9 @@
 #define OLED_RESET 5
 Adafruit_SSD1306 display(OLED_RESET);
 
+const int RLED = 9;
+const int GLED = 8;
+
 /*
 I2C OLED:
   SDA -> A4
@@ -47,6 +50,10 @@ float PPM(uint8_t pin, float R0)
 
 void setup()
 {
+
+  pinMode(RLED, OUTPUT);
+  pinMode(GLED, OUTPUT);  
+
   // init
   Serial.begin(9600);
 
@@ -76,8 +83,14 @@ void setup()
   SDstatus = SD.begin(10);
   Serial.println(SDstatus);
 
-  if(!SDstatus){Serial.println("Failed to load SD card, data will not be written to SD card.");}
-  else{Serial.println("SD card initialized successfully");}
+  if(!SDstatus){
+    digitalWrite(RLED, HIGH);
+    Serial.println("Failed to load SD card, data will not be written to SD card.");
+  }
+  else{
+    Serial.println("SD card initialized successfully");
+    digitalWrite(RLED, LOW);
+  }
 }
 
 void loop()
@@ -130,6 +143,9 @@ void loop()
   // write data to SD card
   if (SDstatus)
   {
+    digitalWrite(GLED, HIGH);
+    delay(100);
+
     File myFile = SD.open("data.txt", FILE_WRITE);
     myFile.print(ppm_NOX);
     myFile.print(",");
@@ -141,6 +157,8 @@ void loop()
     myFile.close();
 
     Serial.println("Data written to SD card");
+    delay(100);
+    digitalWrite(GLED, LOW);
   }
   else{
     Serial.println("Unable to write data to SD card");
