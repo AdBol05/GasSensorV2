@@ -135,7 +135,7 @@ void loop()
   display.display();*/
 
   Serial.println("-------------------");
-  // print raw analog values to console
+  // print values to console
   Serial.println(ppm_NOX);
   Serial.println(ppm_CO);
   Serial.println(temperature);
