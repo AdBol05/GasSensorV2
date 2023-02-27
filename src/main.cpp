@@ -1,7 +1,9 @@
 #include <Arduino.h>
 
+//? MQ9.h MQ9.cpp MQ135.h MQ135.cpp not needed anymore, replaced by PPM function below
 // #include "MQ135.h"
 // #include "MQ9.h"
+
 #include "dht.h"
 
 #include <SD.h>
