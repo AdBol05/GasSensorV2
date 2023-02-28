@@ -1,3 +1,5 @@
+//TODO implement E-ink display, I2C OLED not working for when SD card is active some reason
+
 #include <Arduino.h>
 
 #include "dht.h"
