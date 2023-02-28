@@ -47,7 +47,7 @@ void setup()
 {
 
   pinMode(RLED, OUTPUT);
-  pinMode(GLED, OUTPUT);  
+  pinMode(GLED, OUTPUT);
 
   // init
   Serial.begin(9600);
