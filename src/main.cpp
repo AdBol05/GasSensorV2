@@ -1,25 +1,16 @@
 #include <Arduino.h>
 
-//? MQ9.h MQ9.cpp MQ135.h MQ135.cpp not needed anymore, replaced by PPM function below
-// #include "MQ135.h"
-// #include "MQ9.h"
-
 #include "dht.h"
 
 #include <SD.h>
 
 #include <SPI.h>
 #include <Wire.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 
 #define MQ135_PIN A0
 #define MQ9_PIN A1
 #define DHTPIN A2
 #define DHTTYPE DHT22
-
-#define OLED_RESET 5
-Adafruit_SSD1306 display(OLED_RESET);
 
 const int RLED = 9;
 const int GLED = 8;
@@ -59,28 +50,6 @@ void setup()
   // init
   Serial.begin(9600);
 
-  /*display.begin(16, 2);
-  display.clearDisplay();
-  display.display();
-
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3D (for the 128x64)
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.clearDisplay();
-  display.display();
-
-  // Splash screen
-  delay(500);
-  display.setCursor(5, 10);
-  display.setTextSize(2);
-  display.write("Laborky.cz");
-  display.display();
-  delay(2000);
-  display.clearDisplay();
-  display.display();*/
-
-  //! Fucks up DHT sensor for some reason, I'm losing my fucking mind
   Serial.print("SD card initialization... ");
   SDstatus = SD.begin(10);
   Serial.println(SDstatus);
@@ -107,32 +76,6 @@ void loop()
 
   float temperature = DHT.temperature;
   float humidity = DHT.humidity;
-
-  // Display values
-  /*display.clearDisplay();
-  display.setTextSize(1);
-
-  display.setCursor(26, 0);
-  display.print("NOx:");
-  display.setCursor(55, 0);
-  display.print(ppm_NOX);
-
-  display.setCursor(32, 8);
-  display.print("CO:");
-  display.setCursor(55, 8);
-  display.print(ppm_CO);
-
-  display.setCursor(2, 16);
-  display.print("Teplota:");
-  display.setCursor(55, 16);
-  display.print(temperature);
-
-  display.setCursor(2, 24);
-  display.print("Vlhkost:");
-  display.setCursor(55, 24);
-  display.print(humidity);
-
-  display.display();*/
 
   Serial.println("-------------------");
   // print values to console
