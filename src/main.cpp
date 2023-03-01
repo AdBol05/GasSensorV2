@@ -58,6 +58,10 @@ void setup()
   // init
   Serial.begin(9600);
 
+  Serial.println("============");
+  Serial.println("Laborky.cz");
+  Serial.println("GasSensorV2");
+  Serial.println("===========");
   Serial.print("SD card initialization... ");
   SDstatus = SD.begin(SD_CS);
   Serial.println(SDstatus);
