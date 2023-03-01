@@ -1,4 +1,4 @@
-//TODO implement E-ink display, I2C OLED not working for when SD card is active some reason
+//TODO implement E-ink display, I2C OLED not working when SD card is active for some reason (mby memory issues?)
 
 #include <Arduino.h>
 
