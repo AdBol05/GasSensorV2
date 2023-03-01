@@ -13,9 +13,10 @@
 #define MQ9_PIN A1
 #define DHTPIN A2
 #define DHTTYPE DHT22
+#define SD_CS 4
 
-const int RLED = 9;
-const int GLED = 8;
+const int RLED = 3;
+const int GLED = 2;
 
 /*
 I2C OLED:
@@ -23,7 +24,12 @@ I2C OLED:
   SCL -> A5
 
 SPI E-INK:
-  TBD
+  DIN -> 11
+  CLK -> 13
+  CS -> 10
+  DC -> 9
+  RST -> 8
+  BUSY -> 7
 
 SDcard:
   CS -> 10
@@ -53,7 +59,7 @@ void setup()
   Serial.begin(9600);
 
   Serial.print("SD card initialization... ");
-  SDstatus = SD.begin(10);
+  SDstatus = SD.begin(SD_CS);
   Serial.println(SDstatus);
 
   if(!SDstatus){
