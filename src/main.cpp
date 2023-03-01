@@ -23,7 +23,7 @@ I2C OLED:
   SDA -> A4
   SCL -> A5
 
-SPI E-INK:
+SPI E-INK: (epd2in9b_V3)
   DIN -> 11
   CLK -> 13
   CS -> 10
@@ -62,7 +62,7 @@ void setup()
   Serial.println("Laborky.cz");
   Serial.println("GasSensorV2");
   Serial.println("===========");
-  
+
   Serial.print("SD card initialization... ");
   SDstatus = SD.begin(SD_CS);
   Serial.println(SDstatus);
