@@ -69,7 +69,7 @@ void setup()
 
   if(!SDstatus){
     digitalWrite(RLED, HIGH);
-    Serial.println("Failed to load SD card, data will not be written to SD card.");
+    Serial.println("Failed to load SD card, data logging is disabled.");
   }
   else{
     Serial.println("SD card initialized successfully");
