@@ -84,8 +84,8 @@ void loop()
   // Get values
   Serial.println("Reading sensor data...");
 
-  float ppm_NOX = PPM(MQ135_PIN, 1.18);
-  float ppm_CO = PPM(MQ9_PIN, 5.29);
+  float ppm_NOX = PPM(MQ135_PIN, 1.18); //* 1.18  0.8
+  float ppm_CO = PPM(MQ9_PIN, 5.29);    //* 5.29  1.52
 
   DHT.read22(DHTPIN);
 
