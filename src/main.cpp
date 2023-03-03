@@ -32,7 +32,7 @@ SPI E-INK: (epd2in9b_V3)
   BUSY -> 7
 
 SDcard:
-  CS -> 10
+  CS -> 4
   SCK -> 13
   MOSI -> 11
   MISO -> 12
