@@ -63,6 +63,8 @@ void setup()
   Serial.println("GasSensorV2");
   Serial.println("===========");
 
+  delay(1000);
+
   Serial.print("SD card initialization... ");
   SDstatus = SD.begin(SD_CS);
   Serial.println(SDstatus);
