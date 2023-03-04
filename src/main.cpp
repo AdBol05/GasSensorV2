@@ -123,5 +123,8 @@ void loop()
   else{
     Serial.println("Unable to write data to SD card");
   }
+
+  //TODO: write data to E-Ink display
+
   delay(10000);
 }
