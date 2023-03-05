@@ -1,14 +1,3 @@
-// 
-//    FILE: dht.h
-// VERSION: 0.1.00
-// PURPOSE: DHT Temperature & Humidity Sensor library for Arduino
-//
-//     URL: http://arduino.cc/playground/Main/DHTLib
-//
-// HISTORY:
-// see dht.cpp file
-// 
-
 #ifndef dht_h
 #define dht_h
 
@@ -33,6 +22,3 @@ private:
 	int read(uint8_t pin);
 };
 #endif
-//
-// END OF FILE
-//

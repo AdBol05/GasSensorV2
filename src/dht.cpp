@@ -1,25 +1,6 @@
-//
-//    FILE: dht22.cpp
-// VERSION: 0.1.00
-// PURPOSE: DHT22 Temperature & Humidity Sensor library for Arduino
-//
-// DATASHEET: 
-//
-// HISTORY:
-// 0.1.0 by Rob Tillaart (01/04/2011)
-// inspired by DHT11 library
-//
-
 #include "dht.h"
 
 #define TIMEOUT 10000
-
-/////////////////////////////////////////////////////
-//
-// PUBLIC
-//
-
-
 // return values:
 //  0 : OK
 // -1 : checksum error
@@ -69,12 +50,6 @@ int dht::read22(uint8_t pin)
 
 	return 0;
 }
-
-/////////////////////////////////////////////////////
-//
-// PRIVATE
-//
-
 // return values:
 //  0 : OK
 // -2 : timeout
@@ -128,6 +103,3 @@ int dht::read(uint8_t pin)
 
 	return 0;
 }
-//
-// END OF FILE
-//
