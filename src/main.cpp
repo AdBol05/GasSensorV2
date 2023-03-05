@@ -19,23 +19,23 @@ const int RLED = 3;
 const int GLED = 2;
 
 /*
-I2C OLED:
-  SDA -> A4
-  SCL -> A5
-
-SPI E-INK: (epd2in9b_V3)
-  DIN -> 11
-  CLK -> 13
-  CS -> 10
-  DC -> 9
-  RST -> 8
-  BUSY -> 7
-
-SDcard:
-  CS -> 4
-  SCK -> 13
-  MOSI -> 11
-  MISO -> 12
+//* I2C OLED:
+//*   SDA -> A4
+//*   SCL -> A5
+//* 
+//* SPI E-INK: (epd2in9b_V3)
+//*   DIN -> 11
+//*   CLK -> 13
+//*   CS -> 10
+//*   DC -> 9
+//*   RST -> 8
+//*   BUSY -> 7
+//* 
+//* SDcard:
+//*   CS -> 4
+//*   SCK -> 13
+//*   MOSI -> 11
+//*   MISO -> 12
 */
 
 dht DHT;
