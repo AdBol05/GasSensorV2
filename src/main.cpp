@@ -58,10 +58,10 @@ void setup()
   // init
   Serial.begin(9600);
 
-  Serial.println("============");
-  Serial.println("Laborky.cz");
-  Serial.println("GasSensorV2");
-  Serial.println("===========");
+  Serial.println("|===========|");
+  Serial.println("|  Welcome  |");
+  Serial.println("|GasSensorV2|");
+  Serial.println("|===========|");
 
   delay(1000);
 
