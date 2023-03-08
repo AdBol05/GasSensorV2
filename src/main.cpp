@@ -1,5 +1,3 @@
-//TODO implement E-ink display, I2C OLED not working when SD card is active for some reason (mby memory issues?)
-
 #include <Arduino.h>
 
 #include "dht.h"
@@ -125,6 +123,7 @@ void loop()
   }
 
   //TODO: write data to E-Ink display
+  //! Display not working, E-ink not initializing and OLED resetting arduino when attempted to write.
 
   delay(10000);
 }
