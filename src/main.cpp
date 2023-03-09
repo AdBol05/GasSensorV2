@@ -124,6 +124,7 @@ void loop()
 
   //TODO: write data to E-Ink display
   //! Display not working, E-ink not initializing and OLED resetting arduino when attempted to write.
+  //? Maybe memory leaks, happens only when SDcard or DHT is initialized
 
   delay(10000);
 }
