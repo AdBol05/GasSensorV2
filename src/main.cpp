@@ -14,8 +14,8 @@
 #define DHTTYPE DHT22
 #define SD_CS 4
 
-const int RLED = 3;
-const int GLED = 2;
+#define RLED 3
+#define GLED 2
 
 /*
 //* I2C OLED:
