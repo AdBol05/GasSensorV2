@@ -14,6 +14,11 @@
 #define DHTTYPE DHT22
 #define SD_CS 4
 
+//debug LED
+/*
+red->SDcard error
+green->writing data to SDcard
+*/
 #define RLED 3
 #define GLED 2
 
