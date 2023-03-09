@@ -6,6 +6,7 @@
 
 #include <SPI.h>
 #include <Wire.h>
+//? #include <Sleep.h>
 
 #define MQ135_PIN A0
 #define MQ9_PIN A1
@@ -126,5 +127,6 @@ void loop()
   //! Display not working, E-ink not initializing and OLED resetting arduino when attempted to write.
   //? Maybe memory leaks, happens only when SDcard or DHT is initialized
 
-  delay(60 * 60 * 1000);
+  delay(10000);
+  //? Sleep.sleep(60*60*1000);
 }
