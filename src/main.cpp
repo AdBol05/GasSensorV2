@@ -14,6 +14,9 @@
 #define DHTTYPE DHT22
 #define SD_CS 4
 
+#define R0_MQ9 0.8   //* 1.18  0.8
+#define R0_MQ135 1.52 //* 5.29  1.52
+
 //debug LED
 /*
 red->SDcard error
@@ -88,8 +91,8 @@ void loop()
   // Get values
   Serial.println("Reading sensor data...");
 
-  float ppm_NOX = PPM(MQ135_PIN, 1.18); //* 1.18  0.8
-  float ppm_CO = PPM(MQ9_PIN, 5.29);    //* 5.29  1.52
+  float ppm_NOX = PPM(MQ135_PIN, R0_MQ135);
+  float ppm_CO = PPM(MQ9_PIN, R0_MQ9);
 
   DHT.read22(DHTPIN);
 
